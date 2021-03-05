@@ -8,7 +8,6 @@ const directives = {
     },
     vnode,
   ) {
-    // eslint-disable-next-line no-restricted-properties
     if (oldValue === value || window.isNaN(arg) || !value || Number(value) === 0) return;
 
     const { context } = vnode;
@@ -21,14 +20,6 @@ const directives = {
     (el.tagName === 'INPUT' ? el : el.querySelector('input')).onblur = ({ // addeventlistener不可覆盖，此处请勿使用监听函数处理
       target: { value },
     }) => eval(`context.${expression}=Number(value)||'';`);
-
-    // eval(typeof oldValue === 'undefined'
-    //   ? `context.${expression}=Number(value);` // 第一次及时处理原始值的小数位数，后续再失去焦点才补全小数位数
-    //   : `context.${expression}=newValue;`);
-    // (el.tagName === 'INPUT' ? el : el.querySelector('input')).onblur = ({ // addeventlistener不可覆盖，此处请勿使用监听函数处理
-    //   target: { value },
-    // }) => eval(`context.${expression}=Number(value).toFixed(digit);`);
-
 
     eval(typeof oldValue === 'undefined'
       ? `context.${expression}=Number(value).toFixed(digit+1).slice(0,-1);` // 第一次及时处理原始值的小数位数，后续再失去焦点才补全小数位数

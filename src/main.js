@@ -5,12 +5,13 @@ import mixins from './plugins/mixins'; // mixins
 import router from './setup/router-setup'; // 路由
 import ElementPlus from 'element-plus'; // 引入element-plus
 import 'element-plus/lib/theme-chalk/index.css';
+import directive from './directive/directive';
 
-const app = createApp(App);
-
-app.use(store);
-app.use(router);
-app.use(ElementPlus);
-app.mixin(mixins);
+const app = createApp(App)
+    .use(directive)
+    .use(store)
+    .use(router)
+    .use(ElementPlus)
+    .mixin(mixins);
 
 app.mount('#app');
